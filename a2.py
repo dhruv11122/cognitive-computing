@@ -1,348 +1,254 @@
-# UCS420: Cognitive Computing
-# Assignment 2 - Python Data Structures
-# Lists, Tuples, Sets, Dictionaries
+# UCS420 Assignment 2
 
 import random
 import math
 from collections import Counter
 
 
-# ============================
-# Q1. LIST OPERATIONS
-# ============================
+# Q1
 
-roll_no = "1024170004"  
+roll = "1024170004"
 
-digits = [int(i) for i in roll_no]
+d = [int(x) for x in roll]
 
-L = [digit * 10 for digit in digits]
+L = [x * 10 for x in d]
 
-print("Original List L:", L)
+print("L =", L)
 
-# append() adds an element at the end of the list
-L.append(250)
-print("After append:", L)  # 250 added at the end
+L.append(200)
+print("After append:", L)
 
-# insert() adds an element at a specific position
-L.insert(2, 150)
-print("After insert:", L)  # 150 added at index 2
+L.insert(2, 50)
+print("After insert:", L)
 
-# remove() removes the first occurrence of a value
-L.remove(150)
-print("After remove:", L)  # 150 removed
+L.remove(50)
+print("After remove:", L)
 
-# pop() removes element using index
 L.pop(0)
-print("After pop:", L)  # First element removed
+print("After pop:", L)
 
-
-# Sorting ascending
 L.sort()
-print("Ascending order:", L)
+print("Ascending:", L)
 
-# Sorting descending
 L.sort(reverse=True)
-print("Descending order:", L)
+print("Descending:", L)
 
+print("First 3:", L[:3])
+print("Last 3:", L[-3:])
 
-# Slicing
-print("First three elements:", L[:3])
-print("Last three elements:", L[-3:])
+avg = sum(L) / len(L)
 
+newL = [x for x in L if x > avg]
 
-# List comprehension
-average = sum(L) / len(L)
-
-greater_than_average = [x for x in L if x > average]
-
-print("Elements greater than average:", greater_than_average)
+print("Above average:", newL)
 
 
 
-# ============================
-# Q2. TUPLE OPERATIONS
-# ============================
+# Q2
 
 scores = tuple(L[:8])
 
-print("\nTuple scores:", scores)
+print("\nScores:", scores)
+
+high = max(scores)
+idx = scores.index(high)
+
+print("Highest:", high)
+print("Index:", idx)
+
+low = min(scores)
+
+print("Lowest:", low)
+print("Lowest count:", scores.count(low))
 
 
-# Highest score and index
-highest = max(scores)
-highest_index = scores.index(highest)
-
-print("Highest score:", highest)
-print("Index of highest score:", highest_index)
+rev = list(reversed(scores))
+print("Reverse:", rev)
 
 
-# Lowest score and frequency
-lowest = min(scores)
+n = int(input("Enter score: "))
 
-print("Lowest score:", lowest)
-print("Lowest score frequency:", scores.count(lowest))
-
-
-# Reverse tuple and convert to list
-# Tuple cannot be reversed in-place because tuples are immutable
-reverse_scores = list(reversed(scores))
-
-print("Reversed tuple as list:", reverse_scores)
-
-
-# User input search
-user_score = int(input("Enter a score to search: "))
-
-if user_score in scores:
-    print("First occurrence index:", scores.index(user_score))
+if n in scores:
+    print("Index:", scores.index(n))
 else:
-    print("Score not present in tuple")
+    print("Not present")
 
 
-# Tuple modification attempt
 try:
     scores[0] = 100
 except Exception as e:
-    print("Error while modifying tuple:", e)
+    print(e)
 
-# Tuples cannot be modified because they are immutable,
-# unlike lists which allow element modification.
+# Tuple is immutable so its values cannot be changed like lists.
 
 
-# Tuple unpacking using *
-first, second, *remaining = scores
+a, b, *c = scores
 
-print("First:", first)
-print("Second:", second)
-print("Remaining:", remaining)
+print(a, b, c)
 
 
 
-# ============================
-# Q3. RANDOM NUMBER LIST
-# ============================
+# Q3
 
-random.seed(int(roll_no))
+random.seed(int(roll))
 
-random_numbers = [random.randint(100, 900) for _ in range(100)]
+nums = []
 
-print("\nRandom Numbers:")
-print(random_numbers)
+for i in range(100):
+    nums.append(random.randint(100,900))
 
-
-# Odd numbers
-odd_numbers = [x for x in random_numbers if x % 2 != 0]
-
-print("Odd count:", len(odd_numbers))
-print("Odd numbers:", odd_numbers)
+print("\nNumbers:", nums)
 
 
-# Even numbers
-even_numbers = [x for x in random_numbers if x % 2 == 0]
+odd = [x for x in nums if x % 2 != 0]
+even = [x for x in nums if x % 2 == 0]
 
-print("Even count:", len(even_numbers))
-print("Even numbers:", even_numbers)
+
+print("Odd count:", len(odd))
+print("Odd:", odd)
+
+print("Even count:", len(even))
+print("Even:", even)
 
 
 
-# Prime checking function
-def is_prime(n):
+def prime(n):
     if n < 2:
         return False
-
-    for i in range(2, int(math.sqrt(n)) + 1):
+    
+    for i in range(2, int(math.sqrt(n))+1):
         if n % i == 0:
             return False
-
+    
     return True
 
 
-prime_numbers = [x for x in random_numbers if is_prime(x)]
+primes = [x for x in nums if prime(x)]
 
-print("Prime count:", len(prime_numbers))
-print("Prime numbers:", prime_numbers)
+print("Prime count:", len(primes))
+print("Primes:", primes)
 
 
+cnt = Counter(nums)
 
-# Most frequent number
+num, freq = cnt.most_common(1)[0]
 
-frequency = Counter(random_numbers)
-
-most_common_number, count = frequency.most_common(1)[0]
-
-print("Most frequent number:", most_common_number)
-print("Frequency:", count)
+print("Most repeated:", num)
+print("Frequency:", freq)
 
 
 
-# ============================
-# Q4. SET OPERATIONS
-# ============================
+# Q4
+
+d = [int(x) for x in roll[:8]]
+
+A = {x*7 for x in d}
+B = {x*9 for x in d}
+
+print("\nA =", A)
+print("B =", B)
 
 
-digits = [int(i) for i in roll_no[:8]]
-
-A = {digit * 7 for digit in digits}
-
-B = {digit * 9 for digit in digits}
-
-
-print("\nSet A:", A)
-print("Set B:", B)
-
-
-# Union
 print("Union:", A.union(B))
 
-
-# Intersection
 print("Intersection:", A.intersection(B))
 
 
-# Difference
-print("A - B:", A.difference(B))
-print("B - A:", B.difference(A))
+print("A-B:", A.difference(B))
+print("B-A:", B.difference(A))
 
-# difference() gives elements present in one set but not another,
-# whereas symmetric_difference() gives elements present in either set but not both.
+# difference gives one side elements whereas symmetric difference gives all uncommon elements.
 
-
-# Symmetric difference
-
-print("Symmetric Difference:", A.symmetric_difference(B))
+print("Symmetric difference:", A.symmetric_difference(B))
 
 
-# Subset and Superset
-
-print("Is A subset of B:", A.issubset(B))
-print("Is B superset of A:", B.issuperset(A))
+print("A subset B:", A.issubset(B))
+print("B superset A:", B.issuperset(A))
 
 
-# discard()
-X = int(input("Enter value to remove from set A: "))
+x = int(input("Enter value to remove from A: "))
 
-A.discard(X)
+A.discard(x)
 
-print("Set A after discard:", A)
+print("A after discard:", A)
 
-# discard() is safer than remove() because it does not raise an error
-# if the element does not exist.
+# discard does not give error if value is not present.
 
 
 
-# ============================
-# Q5. DICTIONARY OPERATIONS
-# ============================
+# Q5
 
 
 my_dict = {
     "name": "Dhruv",
-    "roll_no": roll_no,
+    "roll_no": roll,
     "branch": "CSE",
     "age": 19,
     "city": "Mumbai"
 }
 
 
-print("\nOriginal Dictionary:")
+print("\nDictionary:", my_dict)
+
+
+my_dict["location"] = my_dict.pop("city")
+
+my_dict["cgpa"] = 9.17
+
+my_dict["age"] += 1
+
+
 print(my_dict)
 
 
 
-# Rename city to location using pop()
+d1 = my_dict.copy()
 
-my_dict["location"] = my_dict.pop("city")
+d1.pop("branch")
 
-print("After renaming city:", my_dict)
-
-
-
-# Add CGPA
-
-my_dict["cgpa"] = 9.17
-
-print("After adding CGPA:", my_dict)
+print("Using pop:", d1)
 
 
 
-# Increase age
+d2 = my_dict.copy()
 
-my_dict["age"] += 1
+del d2["branch"]
 
-print("After updating age:", my_dict)
-
-
-
-# Delete branch using pop()
-
-dict_pop = my_dict.copy()
-
-removed_branch = dict_pop.pop("branch")
-
-print("Dictionary after pop:", dict_pop)
+print("Using del:", d2)
 
 
-
-# Delete branch using del
-
-dict_del = my_dict.copy()
-
-del dict_del["branch"]
-
-print("Dictionary after del:", dict_del)
+# pop returns deleted value, del only removes it.
 
 
-# pop() returns the removed value, while del only deletes the key.
+for k,v in my_dict.items():
+    print(k, "→", v)
 
 
-
-# Iterating dictionary
-
-print("\nDictionary items:")
-
-for key, value in my_dict.items():
-    print(key, "→", value)
-
-
-
-# Checking email existence
 
 if "email" in my_dict:
     print(my_dict["email"])
 else:
-    print("Email key does not exist")
+    print("Email not found")
 
 
-
-# Friend dictionary
 
 friend_dict = {
-    "name": "Rahul",
-    "roll_no": "12345678",
-    "branch": "ECE",
-    "age": 20,
-    "city": "Delhi"
+    "name":"Rahul",
+    "roll_no":"12345678",
+    "branch":"ECE",
+    "age":20,
+    "city":"Delhi"
 }
 
 
-merged_dict = {**my_dict, **friend_dict}
+merge = {**my_dict, **friend_dict}
 
-print("\nMerged Dictionary:")
-print(merged_dict)
+print("Merged:", merge)
 
-
-# When duplicate keys exist, values from the second dictionary overwrite the first.
+# If same key exists, second dictionary value is used.
 
 
 
-# Dictionary comprehension
+str_dict = {k:v for k,v in my_dict.items() if isinstance(v,str)}
 
-string_values = {
-    key: value 
-    for key, value in my_dict.items()
-    if isinstance(value, str)
-}
-
-
-print("\nDictionary containing only string values:")
-print(string_values)
+print("String values:", str_dict)
